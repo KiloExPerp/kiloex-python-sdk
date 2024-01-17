@@ -85,9 +85,9 @@ https://mantaapi.kiloex.io/common/queryKiloCache
     "time":1705497822973,
     "kiloCache":{
         "kiloConfig":{
-            "minMargin":1000000000,
+            "minMargin":1000000000,//min margin
             "maxShift":200000,
-            "minProfitTime":120,
+            "minProfitTime":120,//The position must be greater than this time, otherwise pnl=0
             "exposureMultiplier":"15000",
             "utilizationMultiplier":"20000",
             "maxExposureMultiplier":"3",
@@ -96,7 +96,7 @@ https://mantaapi.kiloex.io/common/queryKiloCache
             "canUserStake":true,
             "allowPublicLiquidator":false,
             "isTradeEnabled":true,
-            "adlMultiplier":"9"
+            "adlMultiplier":"9"//When the profit exceeds 900%, the position is forced to be reduced
         },
         "fundingBorrowList":[
             {
@@ -109,8 +109,8 @@ https://mantaapi.kiloex.io/common/queryKiloCache
             }
         ],
         "vaultBalance":"114070847080649",
-        "prMinExecutionFee":"210000000000000",
-        "obMinExecutionFee":"210000000000000"
+        "prMinExecutionFee":"210000000000000", //market order execution Fee
+        "obMinExecutionFee":"210000000000000" //limit order execution Fee
     }
 }
 
