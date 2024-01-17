@@ -101,9 +101,9 @@ https://mantaapi.kiloex.io/common/queryKiloCache
         "fundingBorrowList":[
             {
                 "productId":1, 
-                "fundingRate":"48765542909", 
+                "fundingRate":"48765542909", //1h funding rate % = 48765542909 / 1e12 / 365 / 24 * 100
                 "cumulativeFunding":"12860196359",
-                "borrowingRate":"14602690210",
+                "borrowingRate":"14602690210",//1h borrowing rate % = 14602690210 / 1e12 / 365 / 24 * 100
                 "cumulativeBorrowing":"4426068133",
                 "funding":"12860165433"
             }
