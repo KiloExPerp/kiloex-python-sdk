@@ -47,3 +47,15 @@ kilo/config.py
 
 environment = 'BNBTEST'  # or BNB
 ```
+
+## contract address
+
+## basic information interface
+
+from the following interface you can get the symbol information in manta/opbnb/bnb
+
+https://app.kiloex.io/backendstatic/manta/symbols.json
+
+https://app.kiloex.io/backendstatic/opbnb/symbols.json
+
+https://app.kiloex.io/backendstatic/bnb/symbols.json
