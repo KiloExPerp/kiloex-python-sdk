@@ -55,7 +55,11 @@ environment = 'BNBTEST'  # or BNB
 
 
 ```
+## Quote and Candlestick
 
+We using pyth network as our Oracle, So you can get price and candlestick history  from the pyth network, we use this too
+
+https://benchmarks.pyth.network/docs#/TradingView/tradingview_streaming_route_v1_shims_tradingview_streaming_get 
 
 ## Basic Information
 
