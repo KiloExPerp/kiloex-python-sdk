@@ -49,6 +49,13 @@ environment = 'BNBTEST'  # or BNB
 ```
 
 ## Contract Address
+```
+
+
+
+
+```
+
 
 ## Basic Information
 
@@ -59,3 +66,95 @@ https://app.kiloex.io/backendstatic/manta/symbols.json
 https://app.kiloex.io/backendstatic/opbnb/symbols.json
 
 https://app.kiloex.io/backendstatic/bnb/symbols.json
+
+
+### REST API 
+```
+Get information such as funding rates
+
+https://api.kiloex.io/common/queryKiloCache
+https://opapi.kiloex.io/common/queryKiloCache
+https://mantaapi.kiloex.io/common/queryKiloCache
+
+{
+    "status":true,
+    "time":1705497822973,
+    "kiloCache":{
+        "kiloConfig":{
+            "minMargin":1000000000,
+            "maxShift":200000,
+            "minProfitTime":120,
+            "exposureMultiplier":"15000",
+            "utilizationMultiplier":"20000",
+            "maxExposureMultiplier":"3",
+            "liquidationBounty":"5000",
+            "liquidationThreshold":"9000",
+            "canUserStake":true,
+            "allowPublicLiquidator":false,
+            "isTradeEnabled":true,
+            "adlMultiplier":"9"
+        },
+        "fundingBorrowList":[
+            {
+                "productId":1, 
+                "fundingRate":"48765542909", 
+                "cumulativeFunding":"12860196359",
+                "borrowingRate":"14602690210",
+                "cumulativeBorrowing":"4426068133",
+                "funding":"12860165433"
+            }
+        ],
+        "vaultBalance":"114070847080649",
+        "prMinExecutionFee":"210000000000000",
+        "obMinExecutionFee":"210000000000000"
+    }
+}
+
+Get python network oracle price
+
+https://api.kiloex.io/index/prices
+https://opapi.kiloex.io/index/prices
+https://mantaapi.kiloex.io/index/prices
+
+{
+    "current":{
+        "11":"5.69455654",
+        "13":"0.5698006",
+        "14":"101.39774675",
+        "16":"18.36484625",
+        "17":"35.99251357",
+        "18":"158.43509256",
+        "19":"2.74257284",
+        "1":"2542.09418524",
+        "2":"42587.91750075",
+        "101":"2.91830363",
+        "3":"69.04478786",
+        "103":"2.05785",
+        "5":"311.43527",
+        "6":"0.83293208",
+        "7":"0.08037285",
+        "20":"2.96296134",
+        "10":"15.9303861"
+    },
+    "previousDay":{
+        "11":"5.90402619",
+        "13":"0.57615686",
+        "14":"96.5283245",
+        "16":"19.3462",
+        "17":"35.68558684",
+        "18":"121.85358556",
+        "19":"2.757901",
+        "1":"2537.87198993",
+        "2":"42961.0925",
+        "101":"2.95877308",
+        "3":"69.71557851",
+        "103":"2.11196245",
+        "5":"317.14771965",
+        "6":"0.85013963",
+        "7":"0.08189559",
+        "20":"2.89020835",
+        "10":"15.054"
+    }
+}
+
+```
