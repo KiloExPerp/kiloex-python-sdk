@@ -109,8 +109,8 @@ https://mantaapi.kiloex.io/common/queryKiloCache
             }
         ],
         "vaultBalance":"114070847080649",
-        "prMinExecutionFee":"210000000000000", //market order execution Fee
-        "obMinExecutionFee":"210000000000000" //limit order execution Fee
+        "prMinExecutionFee":"210000000000000", //market order execution Fee 210000000000000 / 1e18
+        "obMinExecutionFee":"210000000000000" //limit order execution Fee 210000000000000 / 1e18
     }
 }
 
