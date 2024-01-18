@@ -74,6 +74,38 @@ https://app.kiloex.io/backendstatic/bnb/symbols.json
 
 ### REST API 
 ```
+
+
+Get symbol details
+https://api.kiloex.io/common/queryProducts
+https://opapi.kiloex.io/common/queryProducts
+https://mantaapi.kiloex.io/common/queryProducts
+
+
+{
+    "status":true,
+    "time":1705564929024,
+    "productList":[
+        {
+            "productId":1,
+            "productToken":"0x9ef1b8c0e4f7dc8bf5719ea496883dc6401d5b2e",
+            "maxLeverage":10000000000,//Maximum leverage
+            "minLeverage":200000000,//Minimum leverage
+            "productFee":10,//fee 10 / 1e4
+            "isActive":true,// true tradable
+            "openInterestLong":6959079090084,//open interest long
+            "openInterestShort":264055003556,//open interest short
+            "weight":200,
+            "reserve":250000000000000000,
+            "maxExposure":75241618260109,//max exposure
+            "minPriceChange":20,//
+            "maxPositionSize":50000000000000,//User's maximum position limit
+            "maxShift":0
+        }
+    ]
+}
+
+
 Get information such as funding rates
 
 https://api.kiloex.io/common/queryKiloCache
@@ -160,5 +192,8 @@ https://mantaapi.kiloex.io/index/prices
         "10":"15.054"
     }
 }
+
+
+
 
 ```
