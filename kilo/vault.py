@@ -4,14 +4,14 @@ import config
 import usdt
 import time
 
-# pip install web3==5.31.3
+# pip install web3
 
-web3 = Web3(Web3.HTTPProvider(config.rpc))
+w3 = Web3(Web3.HTTPProvider(config.rpc))
 
 with open('../abi/VaultStakeReward.abi', 'r') as f:
     abi = f.read()
 
-vault_contract = web3.eth.contract(address=config.vault_address, abi=abi)
+vault_contract_w3 = w3.eth.contract(address=config.vault_address, abi=abi)
 
 
 def deposit(amount, user):
@@ -19,24 +19,24 @@ def deposit(amount, user):
         # Automatically authorize USDT limit.
         usdt.approve_usdt_allowance(config.market_contract, 100000)
         # Get transaction count
-        nonce = web3.eth.get_transaction_count(config.wallet)
+        nonce = w3.eth.get_transaction_count(config.wallet)
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': web3.toWei(int(config.gas_price), 'gwei'),
+            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = vault_contract.functions.deposit(amount, user).buildTransaction(tx)
+        txn = vault_contract_w3.functions.deposit(amount, user).build_transaction(tx)
 
         # Sign transaction data
-        signed_txn = web3.eth.account.sign_transaction(txn, private_key=config.private_key)
+        signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
 
         # Send signed transaction data and get transaction hash
-        tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
         print("deposit tx_hash =", tx_hash_str)
 
@@ -50,25 +50,25 @@ def deposit(amount, user):
 def redeem(shares, receiver, owner):
     try:
         # Get transaction count
-        nonce = web3.eth.get_transaction_count(config.wallet)
+        nonce = w3.eth.get_transaction_count(config.wallet)
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': web3.toWei(int(config.gas_price), 'gwei'),
+            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = vault_contract.functions.redeem(shares, receiver, owner).buildTransaction(tx)
+        txn = vault_contract_w3.functions.redeem(shares, receiver, owner).build_transaction(tx)
 
         # Sign transaction data
-        signed_txn = web3.eth.account.sign_transaction(txn, private_key=config.private_key)
+        signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
 
         # Send signed transaction data and get transaction hash
-        tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
         print("redeem tx_hash =", tx_hash_str)
 
@@ -80,7 +80,7 @@ def redeem(shares, receiver, owner):
 
 
 def get_share(account):
-    share = vault_contract.functions.getShare(account).call()
+    share = vault_contract_w3.functions.getShare(account).call()
     return share
 
 

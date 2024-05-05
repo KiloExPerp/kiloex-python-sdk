@@ -7,9 +7,9 @@ import asyncio
 from pythclient.pythaccounts import PythPriceAccount, PythPriceStatus
 from pythclient.solana import SolanaClient, SolanaPublicKey, PYTHNET_HTTP_ENDPOINT, PYTHNET_WS_ENDPOINT
 
-# pip install web3==5.31.3
+# pip install web3
 
-web3 = Web3(Web3.HTTPProvider(config.rpc))
+w3 = Web3(Web3.HTTPProvider(config.rpc))
 
 with open('../abi/PositionRouter.abi', 'r') as f:
     abi = f.read()
@@ -17,8 +17,8 @@ with open('../abi/PositionRouter.abi', 'r') as f:
 with open('../abi/KiloPerpView.abi', 'r') as f:
     view_abi = f.read()
 
-trade_contract = web3.eth.contract(address=config.market_contract, abi=abi)
-view_contract = web3.eth.contract(address=config.view_address, abi=view_abi)
+trade_contract_w3 = w3.eth.contract(address=config.market_contract, abi=abi)
+view_contract_w3 = w3.eth.contract(address=config.view_address, abi=view_abi)
 
 
 def open_market_increase_position(product_id, margin, leverage, is_long, acceptable_price, execution_fee,
@@ -48,27 +48,27 @@ def open_market_increase_position(product_id, margin, leverage, is_long, accepta
     """
     try:
         # Get transaction count
-        nonce = web3.eth.get_transaction_count(config.wallet)
+        nonce = w3.eth.get_transaction_count(config.wallet)
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': web3.toWei(int(config.gas_price), 'gwei'),
+            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
             'value': int(config.execution_fee),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = trade_contract.functions.createIncreasePosition(product_id, margin, leverage, is_long, acceptable_price,
-                                                              execution_fee, referral_code).buildTransaction(tx)
+        txn = trade_contract_w3.functions.createIncreasePosition(product_id, margin, leverage, is_long, acceptable_price,
+                                                              execution_fee, referral_code).build_transaction(tx)
 
         # Sign transaction data
-        signed_txn = web3.eth.account.sign_transaction(txn, private_key=config.private_key)
+        signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
 
         # Send signed transaction data and get transaction hash
-        tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
         print("create_market_increase_position tx_hash =", tx_hash_str)
 
@@ -100,27 +100,27 @@ def open_market_decrease_position(product_id, margin, is_long, acceptable_price,
     """
     try:
         # Get transaction count
-        nonce = web3.eth.get_transaction_count(config.wallet)
+        nonce = w3.eth.get_transaction_count(config.wallet)
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': web3.toWei(int(config.gas_price), 'gwei'),
+            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
             'value': int(config.execution_fee),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = trade_contract.functions.createDecreasePosition(product_id, margin, is_long, acceptable_price,
-                                                              execution_fee).buildTransaction(tx)
+        txn = trade_contract_w3.functions.createDecreasePosition(product_id, margin, is_long, acceptable_price,
+                                                              execution_fee).build_transaction(tx)
 
         # Sign transaction data
-        signed_txn = web3.eth.account.sign_transaction(txn, private_key=config.private_key)
+        signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
 
         # Send signed transaction data and get transaction hash
-        tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
         print("open_market_decrease_position tx_hash =", tx_hash_str)
 
@@ -147,7 +147,7 @@ class Position:
 
 
 def get_positions(account, ids):
-    positions_raw = view_contract.functions.getPositions(account, ids).call()
+    positions_raw = view_contract_w3.functions.getPositions(account, ids).call()
     positions = []
     for position_raw in positions_raw:
         position = Position(*position_raw)
@@ -177,8 +177,8 @@ def init_position():
 
 
 if __name__ == '__main__':
-    amount = 200  # margin = 200USDT
-    leverage = 10  # leverage = 10x
+    amount = 20  # margin = 20USDT
+    leverage = 2  # leverage = 2x
     ids = [1, 2, 3]
 
     market_price = asyncio.run(get_price())
