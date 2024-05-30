@@ -1,20 +1,15 @@
 import logging
 from web3 import Web3
-import config
 import time
+
+from config_kiloex import BASE,BASE12,kiloconfigs,BNBTEST
 
 # pip install web3
 
-w3 = Web3(Web3.HTTPProvider(config.rpc))
-
-with open('../abi/OrderBook.abi', 'r') as f:
+with open('./abi/OrderBook.abi', 'r') as f:
     abi = f.read()
 
-limit_contract_w3 = w3.eth.contract(address=config.order_book_contract, abi=abi)
-
-
-def open_limit_increase_order(product_id, margin, leverage, is_long, trigger_price, trigger_above_threshold,
-                              execution_fee,
+def open_limit_increase_order(config, product_id, margin, leverage, is_long, trigger_price, trigger_above_threshold,
                               referral_code):
     """
     Open a limit increase order.
@@ -36,23 +31,26 @@ def open_limit_increase_order(product_id, margin, leverage, is_long, trigger_pri
     - Exception: If an error occurs.
     """
     try:
+        w3 = Web3(Web3.HTTPProvider(config.rpc))
+        limit_contract_w3 = w3.eth.contract(address=config.order_book_contract, abi=abi)
+
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas_price = w3.eth.gas_price
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
+            'gasPrice': gas_price,
             'value': int(config.execution_fee),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = limit_contract_w3.functions.createIncreaseOrder(product_id, margin, leverage, is_long, trigger_price,
-                                                           trigger_above_threshold,
-                                                           execution_fee, referral_code).build_transaction(tx)
+        txn = limit_contract_w3.functions.createIncreaseOrder(product_id, int(margin * BASE), int(leverage * BASE), is_long, int(trigger_price * BASE),
+                                                           trigger_above_threshold, config.execution_fee, referral_code).build_transaction(tx)
 
         # Sign transaction data
         signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
@@ -69,7 +67,7 @@ def open_limit_increase_order(product_id, margin, leverage, is_long, trigger_pri
         raise e
 
 
-def open_limit_decrease_order(product_id, size, is_long, trigger_price, trigger_above_threshold, execution_fee):
+def open_limit_decrease_order(config, product_id, size, is_long, trigger_price, trigger_above_threshold):
     """
     Open a limit decrease order.
 
@@ -88,22 +86,26 @@ def open_limit_decrease_order(product_id, size, is_long, trigger_price, trigger_
     - Exception: If an error occurs.
     """
     try:
+        w3 = Web3(Web3.HTTPProvider(config.rpc))
+        limit_contract_w3 = w3.eth.contract(address=config.order_book_contract, abi=abi)
+
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas_price = w3.eth.gas_price
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
+            'gasPrice': gas_price,
             'value': int(config.execution_fee),
             'chainId': int(config.chain_id)
         }
 
         # Build transaction data
-        txn = limit_contract_w3.functions.createDecreaseOrder(product_id, size, is_long, trigger_price,
-                                                           trigger_above_threshold, execution_fee).build_transaction(tx)
+        txn = limit_contract_w3.functions.createDecreaseOrder(product_id, int(size * BASE), is_long, int(trigger_price * BASE),
+                                                           trigger_above_threshold, config.execution_fee).build_transaction(tx)
 
         # Sign transaction data
         signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
@@ -123,31 +125,27 @@ def open_limit_decrease_order(product_id, size, is_long, trigger_price, trigger_
 if __name__ == '__main__':
     amount = 20  # margin = 20USDT
     leverage = 2  # leverage = 2x
+    ids = [1, 2, 31]
 
-    # Open a limit increase order, place a limit buy order if it drops below $1700
-    open_limit_increase_order(config.eth_product_id, amount * config.precision,
-                              int(leverage * config.precision), True, int(1700 * config.precision), False,
-                              int(config.execution_fee), bytearray(32))
+    config = kiloconfigs[BNBTEST]
+    product_id = 1
+
+    # Open a limit increase order, place a limit buy order if it drops below $3700
+    open_limit_increase_order(config, product_id, amount, int(leverage), True, int(3700), False, bytearray(32))
     time.sleep(8)
-    # Open a limit increase order, place a limit sell order if it breaks above $2000
-    open_limit_increase_order(config.eth_product_id, amount * config.precision,
-                              int(leverage * config.precision), False, int(2000 * config.precision), True,
-                              int(config.execution_fee), bytearray(32))
+    # Open a limit increase order, place a limit sell order if it breaks above $4000
+    open_limit_increase_order(config, product_id, amount, int(leverage), False, int(4000), True, bytearray(32))
 
     time.sleep(8)
     # Stop-loss for long positions
-    open_limit_decrease_order(config.eth_product_id, int(2000 * config.precision), True, int(1880 * config.precision), False,
-                              int(config.execution_fee))
+    open_limit_decrease_order(config, product_id, int(4000), True, int(3880), False)
     time.sleep(8)
     # Take-profit for long positions
-    open_limit_decrease_order(config.eth_product_id, int(2000 * config.precision), True, int(2000 * config.precision), True,
-                              int(config.execution_fee))
+    open_limit_decrease_order(config, product_id, int(4000), True, int(4000), True)
 
     time.sleep(8)
     # Stop-loss for short positions
-    open_limit_decrease_order(config.eth_product_id, int(2000 * config.precision), False, int(2000 * config.precision), True,
-                              int(config.execution_fee))
+    open_limit_decrease_order(config, product_id, int(4000), False, int(4000), True)
     time.sleep(8)
     # Take-profit for short positions
-    open_limit_decrease_order(config.eth_product_id, int(2000 * config.precision), False, int(1500 * config.precision), False,
-                              int(config.execution_fee))
+    open_limit_decrease_order(config, product_id, int(4000), False, int(3500), False)

@@ -1,36 +1,39 @@
 import logging
 from web3 import Web3
-import config
-import usdt
 import time
+import usdt_kiloex
+from config_kiloex import BASE,BASE12,kiloconfigs,BNBTEST
 
 # pip install web3
 
-w3 = Web3(Web3.HTTPProvider(config.rpc))
-
-with open('../abi/VaultStakeReward.abi', 'r') as f:
+with open('./abi/VaultStakeReward.abi', 'r') as f:
     abi = f.read()
 
-vault_contract_w3 = w3.eth.contract(address=config.vault_address, abi=abi)
+with open('./abi/Usdt.abi', 'r') as f:
+    usdt_abi = f.read()
 
-
-def deposit(amount, user):
+def deposit(config, amount, user):
     try:
         # Automatically authorize USDT limit.
-        usdt.approve_usdt_allowance(config.market_contract, 100000)
+        usdt_kiloex.approve_usdt_allowance(config, config.market_contract, 100000)
+        w3 = Web3(Web3.HTTPProvider(config.rpc))
+        vault_contract_w3 = w3.eth.contract(address=config.vault_address, abi=abi)
+        contract = w3.eth.contract(address=config.usdt_contract, abi=usdt_abi)
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas_price = w3.eth.gas_price
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
+            'gasPrice': gas_price,
             'chainId': int(config.chain_id)
         }
 
+        #base_decimals = 10 ** contract.functions.decimals().call()
         # Build transaction data
-        txn = vault_contract_w3.functions.deposit(amount, user).build_transaction(tx)
+        txn = vault_contract_w3.functions.deposit(int(amount * BASE), user).build_transaction(tx)
 
         # Sign transaction data
         signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
@@ -47,17 +50,20 @@ def deposit(amount, user):
         raise e
 
 
-def redeem(shares, receiver, owner):
+def redeem(config, shares, receiver, owner):
     try:
+        w3 = Web3(Web3.HTTPProvider(config.rpc))
+        vault_contract_w3 = w3.eth.contract(address=config.vault_address, abi=abi)
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas_price = w3.eth.gas_price
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
             'gas': config.gas,
-            'gasPrice': w3.to_wei(int(config.gas_price), 'gwei'),
+            'gasPrice': gas_price,
             'chainId': int(config.chain_id)
         }
 
@@ -79,18 +85,21 @@ def redeem(shares, receiver, owner):
         raise e
 
 
-def get_share(account):
+def get_share(config, account):
+    w3 = Web3(Web3.HTTPProvider(config.rpc))
+    vault_contract_w3 = w3.eth.contract(address=config.vault_address, abi=abi)
     share = vault_contract_w3.functions.getShare(account).call()
     return share
 
 
 if __name__ == '__main__':
+    config = kiloconfigs[BNBTEST]
     # Recharge funds into the vault to earn profits.
-    deposit(int(2000 * config.precision), config.wallet)
+    deposit(config,1, config.wallet)
     time.sleep(8)
     # Obtain the current shares of the vault that you hold.
-    share = get_share(config.wallet)
+    share = get_share(config, config.wallet)
     print("share =", share)
     time.sleep(8)
     # Withdraw from the vault and redeem your USDT. The redeem operation requires a period of time to pass. If the error "Vault: not in period" is thrown, you need to wait for the time period to expire before redeeming.
-    redeem(int(share / 1e18 * 1e8), config.wallet, config.wallet)
+    redeem(config, int(share / 1e18 * 1e8), config.wallet, config.wallet)

@@ -1,6 +1,6 @@
 venv
 .idea
-kilo/__pycache__
+__pycache__
 app/*.log
 .env
 .env.ini
