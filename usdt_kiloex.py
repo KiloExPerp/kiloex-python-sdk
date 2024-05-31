@@ -1,5 +1,5 @@
 from web3 import Web3
-from config_kiloex import MARGIN_MIN,BNBTEST,kiloconfigs
+from config_kiloex import MARGIN_MIN,BNBTEST,OTEST,MANTA,OPBNB,kiloconfigs
 
 with open('./abi/Usdt.abi', 'r') as f:
     usdt_abi = f.read()
@@ -54,7 +54,7 @@ def get_available_balance(mconfig, oconfig):
     return balance
 
 if __name__ == '__main__':
-    for chain in [BNBTEST]:
+    for chain in [BNBTEST,OTEST,MANTA,OPBNB]:
         config = kiloconfigs[chain]
         print(get_balance(config))
         print(get_available_balance(config, config))

@@ -4,6 +4,7 @@ from config_kiloex import BASE,BASE12,kiloconfigs,BNBTEST
 
 import time
 import usdt_kiloex
+import api_kiloex
 import asyncio
 from pythclient.pythaccounts import PythPriceAccount, PythPriceStatus
 from pythclient.solana import SolanaClient, SolanaPublicKey, PYTHNET_HTTP_ENDPOINT, PYTHNET_WS_ENDPOINT
@@ -148,7 +149,7 @@ if __name__ == '__main__':
     config = kiloconfigs[BNBTEST]
     product_id = 1
 
-    market_price = asyncio.run(get_price())
+    market_price = api_kiloex.index_price(product_id) #asyncio.run(get_price())
     print(market_price)
 
     # Long at market price. When going long, the execution price must be lower than the acceptable_price to be executed.

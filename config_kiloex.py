@@ -7,6 +7,9 @@ MARGIN_MIN = int(10)
 LEVERAGE = int(2)
 
 BNBTEST = 'BNBTEST'
+OTEST = 'OTEST'
+MANTA = 'MANTA'
+OPBNB = 'OPBNB'
 
 config_data = configparser.ConfigParser()
 config_data.read('config_kiloex.ini')
@@ -38,7 +41,7 @@ class KiloConfig:
         return f"KiloConfig(chain={self.chain}, chain_id={self.chain_id}, rpc={self.rpc}, wallet={self.wallet}, margin_contract={self.margin_contract}, market_contract={self.market_contract}, order_book_contract={self.order_book_contract}, vault_address={self.vault_address}, view_address={self.view_address}, usdt_contract={self.usdt_contract}, execution_fee={self.execution_fee}, gas={self.gas})"
 
 kiloconfigs = {}
-for chain in [BNBTEST] :
+for chain in [BNBTEST, OTEST, MANTA, OPBNB] :
     kiloconfigs[chain] = KiloConfig(
         chain = chain,
         chain_id = int(config_data.get(chain, 'chain_id')),
