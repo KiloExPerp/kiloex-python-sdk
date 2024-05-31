@@ -21,7 +21,6 @@ def open_limit_increase_order(config, product_id, margin, leverage, is_long, tri
     - is_long (bool): Whether to open a long order (True for yes, False for no)
     - trigger_price (int): trigger price
     - trigger_above_threshold (bool): False, triggered by breaking below the trigger price & True, triggered by breaking above the trigger price
-    - execution_fee (int): Execution fee
     - referral_code (str): Referral code
 
     Returns:
@@ -77,7 +76,6 @@ def open_limit_decrease_order(config, product_id, size, is_long, trigger_price, 
     - is_long (bool): Whether to close a long position (True for yes, False for no)
     - trigger_price (int): trigger price
     - trigger_above_threshold (bool): False, triggered by breaking below the trigger price & True, triggered by breaking above the trigger price
-    - execution_fee (int): Execution fee
 
     Returns:
     - tx_hash (str): Transaction hash

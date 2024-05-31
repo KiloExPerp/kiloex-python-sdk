@@ -1,4 +1,4 @@
-# kilo-sdk
+# kilo-python-sdk
 
 
 
@@ -8,22 +8,22 @@
 
 ```
 # Basic Configuration Data Including Chain ID, RPC, etc.
-kilo/config.ini 
+config_kiloex.ini
 
 # Load corresponding configuration based on environment setup, such as BNBTEST BNB.
-kilo/config.py 
+config_kiloex.py
 
 # Here is an example of market order API, including opening long and short positions with multiple orders, and closing long and short positions.
-kilo/market_trade.py
+market_trade_kiloex.py
 
 # This is an example file of limit orders, which includes limit buy orders, limit sell orders, and limit orders with take profit and stop loss.
-kilo/limit_trade.py
+limit_trade_kiloex.py
 
 # This is an example file for a vault, which includes examples of how to deposit, check shares, and redeem.
-kilo/vault.py
+vault_kiloex.py
 
 # This file mainly contains the logic of automatically authorizing the USDT quota. The logic and amount here can be configured according to actual needs.
-kilo/usdt.py
+usdt_kiloex.py
 ```
 
 ### Key configuration.
@@ -35,17 +35,14 @@ env-example
 wallet = 0xBdC1248427332eCD8e08B2a3b2a1292CE37daB1b
 private_key = 0xab57804aaacd2ba0a24a6657fcafb27bc126f3b5ba262b82218ad14722f6621e
 
-[BNB]
-wallet = 0xBdC1248427332eCD8e08B2a3b2a1292CE37daB1b
-private_key = 0xab57804aaacd2ba0a24a6657fcafb27bc126f3b5ba262b82218ad14722f6621e
 ```
 
 ### Environment Switching
 ```
-# This file can configure the environment parameter, currently there are 2 sets of environments that can be switched, including BNBTEST and BNB environment. You just need to specify the corresponding environment to complete the environment switching. 
+# This file can configure the environment parameter, currently there are 2 sets of environments that can be switched, including BNBTEST and BNB environment. You just need to specify the corresponding environment to complete the environment switching.
 kilo/config.py
 
-environment = 'BNBTEST'  # or BNB
+environment = 'BNBTEST'  # or ...
 ```
 
 ## Contract Address
@@ -69,7 +66,7 @@ environment = 'BNBTEST'  # or BNB
 "tradeRewardDistributorAddr": "0xB1d06544B5c34f5b85AaD37cdFFd58610D7a8fBc"
 ```
 
-### Bnb mainnet 
+### Bnb mainnet
 ```
 "pendingRewardAddr": "0x8fd9e2457C7Df433D06BC45Dd1B134AF19a0a246",
 "kiloStorageManagerAddr": "0xfE03be1b0504031e92eDA810374222c944351356",
@@ -107,25 +104,6 @@ environment = 'BNBTEST'  # or BNB
 "tradeRewardDistributorAddr": "0xB1d06544B5c34f5b85AaD37cdFFd58610D7a8fBc",
 ```
 
-### opBNB testnet
-```
-"pendingRewardAddr": "0xd8004F4DB242aD09987D4f3E2e38852189A1EfEF",
-"kiloStorageManagerAddr": "0xb7772759cE4f9E648748eFEcD2C768e136EE0641",
-"productManagerAddr": "0x368Edb782FCbd4f029aAECa11788cC80A4ac735B",
-"kiloPriceFeedAddr": "0x7BC97149867a0cCE557d2E2D96Dd27aA2736e35E",
-"marginFeeManagerAddr": "0x363EA21E59b9DA7a106Ce388c0E63A43BA47fFbF",
-"kusdAddr": "0x946FB1871396f77e2e0232cDbC96b818035c6068",
-"perpTradeAddr": "0x2274AfBb956BC7a429080dA4570e012c1b84056F",
-"vaultStakeRewardAddr": "0x31ec2E28cDA34F8550dD2A517577bfe2256092A5",
-"orderBookAddr": "0xA1BE23EF67Ef0848d3052eab725c3241ff5e3f58",
-"positionRouterAddr": "0x052332E4B074Ac5BEf50bA31f0A45E17b38E006f",
-"kiloPerpViewAddr": "0x7FdFafe4E8b7Dc71B6B115311935815aaE2f89c8",
-"liquidationPriceReaderAddr": "0x3CD9fE7C7d9a9F1e5775eBc9244093861C4f1bc4",
-"referralStorageManagerAddr": "0x956A06aAf4A5C7252a73534A06eb0CD569eD9e75",
-"protocolRewardAddr": "0x1c3b7F087381281a92Ef92D59d5cDa1EB34A8bD8",
-"tradeRewardDistributorAddr": "0x979E37Ea2c9D0d92Da433D0baCcDf6934672203c"
-```
-
 ### Bnbtest testnet
 ```
 "pendingRewardAddr": "0x4dE3273F7fCFf1C1517Cd0e94819AC38FD8A4722",
@@ -146,30 +124,11 @@ environment = 'BNBTEST'  # or BNB
 "kiloPassCardAddr": "0x819f675875349DD4f52d31d5902F07b4b5471cE7"
 ```
 
-### Manta testnet
-```
-"pendingRewardAddr": "0xA829Cf002080a5206DEEF78759514963B3395fCD",
-"kiloStorageManagerAddr": "0x6b406c57Eea65c11bF33aaB7e1132035ec2bD570",
-"productManagerAddr": "0x480AC753ca4eb7AE7283E332d4C6cA9772a3b0CF",
-"kiloPriceFeedAddr": "0xee00844584972E910633ae2E45573Dc96a34694a",
-"marginFeeManagerAddr": "0x7BC97149867a0cCE557d2E2D96Dd27aA2736e35E",
-"kusdAddr": "0xF6C98b8EB797e0FE065327ef9CB3Ad0D51Ad737c",
-"perpTradeAddr": "0x758e1Aa60a642CE9Dc213eF5F13115B2fd74A5bB",
-"vaultStakeRewardAddr": "0x363EA21E59b9DA7a106Ce388c0E63A43BA47fFbF",
-"orderBookAddr": "0x6a47641Af3C7e7dF65cF2eEDB79eD92bd502b64D",
-"positionRouterAddr": "0xBb738C789BA39E98316Caab2fAeffEbbb134FB8E",
-"kiloPerpViewAddr": "0x2274AfBb956BC7a429080dA4570e012c1b84056F",
-"liquidationPriceReaderAddr": "0x101286404FAB95f7A2C7D732BBAe182c1D3e7465",
-"referralStorageManagerAddr": "0x38AC82588D5401c96145583D6Ca9022943d19682",
-"protocolRewardAddr": "0x31ec2E28cDA34F8550dD2A517577bfe2256092A5",
-"tradeRewardDistributorAddr": "0xaC87089c0949571D5FdF8cBF3FFDA96Bd15Dae1C",
-```
-
 ## Quote and Candlestick
 
 We using pyth network as our Oracle, So you can get price and candlestick history  from the pyth network, we use this too
 
-https://benchmarks.pyth.network/docs#/TradingView/tradingview_streaming_route_v1_shims_tradingview_streaming_get 
+https://benchmarks.pyth.network/docs#/TradingView/tradingview_streaming_route_v1_shims_tradingview_streaming_get
 
 ## Basic Information
 
@@ -182,7 +141,7 @@ https://app.kiloex.io/backendstatic/opbnb/symbols.json
 https://app.kiloex.io/backendstatic/bnb/symbols.json
 
 
-### REST API 
+### REST API
 ```
 
 
@@ -242,7 +201,7 @@ https://mantaapi.kiloex.io/common/queryKiloCache
         },
         "fundingBorrowList":[
             {
-                "productId":1, 
+                "productId":1,
                 "fundingRate":"48765542909", //1h funding rate % = 48765542909 / 1e12 / 365 / 24 * 100
                 "cumulativeFunding":"12860196359",
                 "borrowingRate":"14602690210",//1h borrowing rate % = 14602690210 / 1e12 / 365 / 24 * 100
