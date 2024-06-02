@@ -6,11 +6,13 @@ from config_kiloex import BASE,BASE12,kiloconfigs,BNBTEST
 
 # pip install web3
 
+vaultV2 = False
 with open('./abi/VaultStakeReward.abi', 'r') as f:
     abi = f.read()
 
 with open('./abi/Usdt.abi', 'r') as f:
     usdt_abi = f.read()
+
 
 def deposit(config, amount, user):
     try:
@@ -31,9 +33,11 @@ def deposit(config, amount, user):
             'chainId': int(config.chain_id)
         }
 
-        #base_decimals = 10 ** contract.functions.decimals().call()
+        base_decimals = BASE
+        if vaultV2:
+            base_decimals = 10 ** contract.functions.decimals().call()
         # Build transaction data
-        txn = vault_contract_w3.functions.deposit(int(amount * BASE), user).build_transaction(tx)
+        txn = vault_contract_w3.functions.deposit(int(amount * base_decimals), user).build_transaction(tx)
 
         # Sign transaction data
         signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
@@ -95,7 +99,7 @@ def get_share(config, account):
 if __name__ == '__main__':
     config = kiloconfigs[BNBTEST]
     # Recharge funds into the vault to earn profits.
-    deposit(config,1, config.wallet)
+    deposit(config, 1, config.wallet)
     time.sleep(8)
     # Obtain the current shares of the vault that you hold.
     share = get_share(config, config.wallet)
