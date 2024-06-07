@@ -41,22 +41,24 @@ def open_market_increase_position(config, product_id, margin, leverage, is_long,
         w3 = Web3(Web3.HTTPProvider(config.rpc))
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas = config.gas
         gas_price = w3.eth.gas_price
+        execution_fee = config.execution_fee
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
-            'gas': config.gas,
+            'gas': gas,
             'gasPrice': gas_price,
-            'value': config.execution_fee,
+            'value': execution_fee,
             'chainId': config.chain_id
         }
 
         # Build transaction data
         trade_contract_w3 = w3.eth.contract(address=config.market_contract, abi=abi)
         txn = trade_contract_w3.functions.createIncreasePosition(product_id, int(margin * BASE), int(leverage * BASE), is_long, int(acceptable_price * BASE),
-                                                                 config.execution_fee, referral_code).build_transaction(tx)
+                                                                 execution_fee, referral_code).build_transaction(tx)
 
         # Sign transaction data
         signed_txn = w3.eth.account.sign_transaction(txn, private_key=config.private_key)
@@ -64,7 +66,7 @@ def open_market_increase_position(config, product_id, margin, leverage, is_long,
         # Send signed transaction data and get transaction hash
         tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
-        print("create_market_increase_position tx_hash =", tx_hash_str, "gas_price=", gas_price, "execution_fee=", config.execution_fee)
+        print("create_market_increase_position tx_hash =", tx_hash_str, "gas_price=", gas_price, "execution_fee=", execution_fee)
 
         return tx_hash
     except Exception as e:
@@ -95,15 +97,17 @@ def open_market_decrease_position(config, product_id, margin, is_long, acceptabl
         w3 = Web3(Web3.HTTPProvider(config.rpc))
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas = config.gas
         gas_price = w3.eth.gas_price
+        execution_fee = config.execution_fee
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
-            'gas': config.gas,
+            'gas': gas,
             'gasPrice': gas_price,
-            'value': config.execution_fee,
+            'value': execution_fee,
             'chainId': config.chain_id
         }
 
@@ -118,7 +122,7 @@ def open_market_decrease_position(config, product_id, margin, is_long, acceptabl
         # Send signed transaction data and get transaction hash
         tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_hash_str = tx_hash.hex()
-        print("open_market_decrease_position tx_hash =", tx_hash_str, "gas_price=", gas_price, "execution_fee=", config.execution_fee)
+        print("open_market_decrease_position tx_hash =", tx_hash_str, "gas_price=", gas_price, "execution_fee=", execution_fee)
 
         return tx_hash_str
     except Exception as e:
@@ -144,7 +148,6 @@ async def get_price():
 if __name__ == '__main__':
     amount = 20  # margin = 20USDT
     leverage = 2  # leverage = 2x
-    ids = [1, 2, 31]
 
     config = kiloconfigs[BNBTEST]
     product_id = 1
