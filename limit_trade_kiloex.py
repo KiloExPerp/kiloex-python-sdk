@@ -35,16 +35,18 @@ def open_limit_increase_order(config, product_id, margin, leverage, is_long, tri
 
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas = config.gas
         gas_price = w3.eth.gas_price
+        execution_fee = config.execution_fee
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
-            'gas': config.gas,
+            'gas': gas,
             'gasPrice': gas_price,
-            'value': int(config.execution_fee),
-            'chainId': int(config.chain_id)
+            'value': execution_fee,
+            'chainId': config.chain_id
         }
 
         # Build transaction data
@@ -89,16 +91,18 @@ def open_limit_decrease_order(config, product_id, size, is_long, trigger_price, 
 
         # Get transaction count
         nonce = w3.eth.get_transaction_count(config.wallet)
+        gas = config.gas
         gas_price = w3.eth.gas_price
+        execution_fee = config.execution_fee
 
         # Build transaction object
         tx = {
             'from': config.wallet,
             'nonce': nonce,
-            'gas': config.gas,
+            'gas': gas,
             'gasPrice': gas_price,
-            'value': int(config.execution_fee),
-            'chainId': int(config.chain_id)
+            'value': execution_fee,
+            'chainId': config.chain_id
         }
 
         # Build transaction data

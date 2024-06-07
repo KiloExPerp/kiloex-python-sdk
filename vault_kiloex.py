@@ -6,7 +6,7 @@ from config_kiloex import BASE,BASE12,kiloconfigs,BNBTEST
 
 # pip install web3
 
-vaultV2 = False
+vaultV2 = True
 with open('./abi/VaultStakeReward.abi', 'r') as f:
     abi = f.read()
 
@@ -102,8 +102,8 @@ if __name__ == '__main__':
     deposit(config, 1, config.wallet)
     time.sleep(8)
     # Obtain the current shares of the vault that you hold.
-    share = get_share(config, config.wallet)
-    print("share =", share)
-    time.sleep(8)
+    #share = get_share(config, config.wallet)
+    #print("share =", share)
+    #time.sleep(8)
     # Withdraw from the vault and redeem your USDT. The redeem operation requires a period of time to pass. If the error "Vault: not in period" is thrown, you need to wait for the time period to expire before redeeming.
-    redeem(config, int(share / 1e18 * 1e8), config.wallet, config.wallet)
+    #redeem(config, int(share / 1e18 * 1e8), config.wallet, config.wallet)

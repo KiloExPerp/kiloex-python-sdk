@@ -29,6 +29,11 @@ class TestPerp(unittest.TestCase):
         positions = perp_kiloex.get_positions(kiloconfigs[BNBTEST], ids)
         self.assertTrue(len(positions) >= 0)
 
+import asset_kiloex
+class TestAsset(unittest.TestCase):
+    def test_get_asset(self):
+        self.assertTrue(asset_kiloex.get_asset(kiloconfigs[BNBTEST], kiloconfigs[OTEST]) >= usdt_kiloex.get_balance(kiloconfigs[BNBTEST]))
+
 import api_kiloex
 class TestApi(unittest.TestCase):
     def test_queryKiloCache(self):
