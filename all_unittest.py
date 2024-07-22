@@ -36,13 +36,17 @@ class TestAsset(unittest.TestCase):
 
 import api_kiloex
 class TestApi(unittest.TestCase):
-    def test_queryKiloCache(self):
-        self.assertEqual(api_kiloex.queryKiloCache(BNBTEST).status_code, 200)
-        self.assertTrue(len(api_kiloex.queryKiloCache(BNBTEST).text) >= 0)
-    def test_queryProducts(self):
-        self.assertEqual(api_kiloex.queryProducts(BNBTEST).status_code, 200)
-    def test_index_prices(self):
-        self.assertEqual(api_kiloex.index_prices(BNBTEST).status_code, 200)
+    def test_index_symbols(self):
+        self.assertTrue(len(api_kiloex.index_symbols(BNBTEST)) >= 0)
+    def test_index_symbol(self):
+        self.assertEqual(api_kiloex.index_symbol(1, BNBTEST), "ETHUSD")
+        self.assertEqual(api_kiloex.index_symbol(222, BNBTEST), None)
+    def test_query_fundingList(self):
+        self.assertTrue(len(api_kiloex.query_fundingList(BNBTEST)) >= 0)
+    def test_query_productList(self):
+        self.assertTrue(len(api_kiloex.query_productList(BNBTEST)) >= 0)
+    def test_index_prices_current(self):
+        self.assertTrue(len(api_kiloex.index_prices_current(BNBTEST)) >= 0)
     def test_index_price(self):
         self.assertTrue(api_kiloex.index_price(1, BNBTEST) > 3000)
 
