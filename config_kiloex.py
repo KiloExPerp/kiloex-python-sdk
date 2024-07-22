@@ -4,12 +4,14 @@ import os
 BASE = int(1e8)
 BASE12 = int(1e12)
 MARGIN_MIN = int(10)
-LEVERAGE = int(2)
+LEVERAGE_MIN = int(2)
 
 BNBTEST = 'BNBTEST'
 OTEST = 'OTEST'
 MANTA = 'MANTA'
 OPBNB = 'OPBNB'
+BNB = 'BNB'
+TAIKO = 'TAIKO'
 
 config_data = configparser.ConfigParser()
 config_data.read('config_kiloex.ini')
