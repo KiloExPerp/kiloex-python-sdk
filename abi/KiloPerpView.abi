@@ -20,6 +20,45 @@
     {
       "inputs": [
         {
+          "internalType": "uint256[]",
+          "name": "positionIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchGetPositions",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "margins",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "leverages",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "prices",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "int256[]",
+          "name": "fundings",
+          "type": "int256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "lastIncreasedTimes",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "positionId",
           "type": "uint256"
@@ -119,6 +158,71 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "ids",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getMaxOpens",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "maxOpenForLong",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "maxOpenForShort",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getOpenPnlNextRequest",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nextRequestTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "forceNewEpoch",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getOpenPnlNextRequestTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nextRequestTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "forceNewEpoch",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "getParameters",
       "outputs": [
@@ -156,6 +260,324 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getPendingPositions",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "margin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "leverage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "tradeFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isLong",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "acceptablePrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "executionFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IPositionRouter.IncreasePositionRequest[]",
+          "name": "increasePositionRequests",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "margin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isLong",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "acceptablePrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "executionFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IPositionRouter.DecreasePositionRequest[]",
+          "name": "decreasePositionRequests",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "ids",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getPositionWithPending",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "leverage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "oraclePrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "margin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isLong",
+              "type": "bool"
+            },
+            {
+              "internalType": "int256",
+              "name": "funding",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowing",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct KiloPerpView.Position[]",
+          "name": "positions",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "margin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "leverage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "tradeFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isLong",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "acceptablePrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "executionFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IPositionRouter.IncreasePositionRequest[]",
+          "name": "increasePositionRequests",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "margin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isLong",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "acceptablePrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "executionFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IPositionRouter.DecreasePositionRequest[]",
+          "name": "decreasePositionRequests",
+          "type": "tuple[]"
         }
       ],
       "stateMutability": "view",
@@ -245,7 +667,7 @@
           "type": "uint256[]"
         }
       ],
-      "name": "getProducts",
+      "name": "getProductsV2",
       "outputs": [
         {
           "components": [
@@ -313,9 +735,19 @@
               "internalType": "uint256",
               "name": "maxPositionSize",
               "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxShift",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSpread",
+              "type": "uint256"
             }
           ],
-          "internalType": "struct KiloPerpView.Product[]",
+          "internalType": "struct KiloPerpView.ProductV2[]",
           "name": "products",
           "type": "tuple[]"
         }
@@ -368,6 +800,518 @@
       "name": "initialize",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_kToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_nft",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_openTradesPnlFeed",
+          "type": "address"
+        }
+      ],
+      "name": "initializeVaultV2",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "positionMargins",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "ids",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "productSummary",
+      "outputs": [
+        {
+          "internalType": "int256[]",
+          "name": "fundingRates",
+          "type": "int256[]"
+        },
+        {
+          "internalType": "int256[]",
+          "name": "cumulativeFundings",
+          "type": "int256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "borrowingRates",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "cumulativeBorrowings",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "maxOpenForLong",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "maxOpenForShort",
+          "type": "uint256[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "productId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "productToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxLeverage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minLeverage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "productFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "openInterestLong",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "openInterestShort",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "weight",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "reserve",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxExposure",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minPriceChange",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxPositionSize",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxShift",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSpread",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct KiloPerpView.ProductV2[]",
+          "name": "products",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "valueBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "prMinExecutionFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "obMinExecutionFee",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint64",
+              "name": "minMargin",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint32",
+              "name": "maxShift",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "minProfitTime",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "exposureMultiplier",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "utilizationMultiplier",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint8",
+              "name": "maxExposureMultiplier",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint16",
+              "name": "liquidationBounty",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "liquidationThreshold",
+              "type": "uint16"
+            },
+            {
+              "internalType": "bool",
+              "name": "canUserStake",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "allowPublicLiquidator",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "isTradeEnabled",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint8",
+              "name": "adlMultiplier",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IKiloStorage.KiloConfig",
+          "name": "kiloConfig",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "vaultOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "tvl",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "collateralizationP",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "kUSDTPrice",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpoch",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nextEpochValuesRequestCount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpochStart",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpochEnd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "epochDuration",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "withdrawEpochsTimelock",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSharesBeingWithdrawn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "MIN_LOCK_DURATION",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "shares",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "assetsDeposited",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "assetsDiscount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "atTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockDuration",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IKToken.LockedDeposit[]",
+          "name": "lockedDeposits",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "lockedDepositIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "availableShares",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lockedShares",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalVaules",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "owners",
+          "type": "address[]"
+        }
+      ],
+      "name": "vaultOwnerSummary",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "ownerOf",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "availableSharesOf",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "lockedSharesOf",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "lockedAssetsDepositedOf",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "lockedAssetsDiscountOf",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "totalSharesBeingWithdrawnOf",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "vaultSummary",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "availableAssets",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalDeposited",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "totalClosedPnl",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalRewards",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalAssets",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "assetsToDeplete",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "kUSDTPrice",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "accPnlPerToken",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "accPnlPerTokenUsed",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "accRewardsPerToken",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpoch",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpochStart",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentEpochEnd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "epochDuration",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requestsStart",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalRefilled",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     }
   ]
