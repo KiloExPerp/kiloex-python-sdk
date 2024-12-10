@@ -13,6 +13,7 @@ OPBNB = 'OPBNB'
 BNB = 'BNB'
 B2 = 'B2'
 TAIKO = 'TAIKO'
+BASE_MAINNET = 'BASE_MAINNET'
 
 config_data = configparser.ConfigParser()
 config_data.read('config_kiloex.ini')
@@ -64,6 +65,6 @@ class KiloConfig:
         return f"KiloConfig(chain={self.chain}, wallet={self.wallet}, chain_id={self.chain_id}, rpc={self.rpc}, margin_contract={self.margin_contract}, market_contract={self.market_contract}, market_trigger_contract={self.market_trigger_contract}, order_book_contract={self.order_book_contract}, vault_address={self.vault_address}, view_address={self.view_address}, usdt_contract={self.usdt_contract}, execution_fee={self.execution_fee}, gas={self.gas})"
 
 kiloconfigs = {}
-for chain in [BNBTEST, OTEST]:
-#for chain in [BNBTEST, OTEST, MANTA, OPBNB, BNB, B2]:
+#for chain in [BNBTEST, OTEST]:
+for chain in [BNBTEST, OTEST, MANTA, OPBNB, BASE_MAINNET]:
     kiloconfigs[chain] = newKiloConfig(chain, chain)
