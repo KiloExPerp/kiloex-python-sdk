@@ -24,6 +24,9 @@ vault_kiloex.py
 
 # This file mainly contains the logic of automatically authorizing the USDT quota. The logic and amount here can be configured according to actual needs.
 usdt_kiloex.py
+
+# from this file you can calc spread, get product funding fee, max open position, current oi.
+perp_kiloex.py
 ```
 
 ### Key configuration.
