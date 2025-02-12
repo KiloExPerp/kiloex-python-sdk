@@ -129,6 +129,8 @@ https://opapi.kiloex.io/index/symbols?types=all
 
 https://api.kiloex.io/index/symbols?types=all
 
+https://baseapi.kiloex.io/index/symbols?types=all
+
 
 ### REST API
 ```
