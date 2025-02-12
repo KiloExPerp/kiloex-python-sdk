@@ -123,11 +123,11 @@ https://benchmarks.pyth.network/docs#/TradingView/tradingview_streaming_route_v1
 
 from the following interface you can get the symbol information in manta/opbnb/bnb/base
 
-https://mantaapi.kiloex.io/index/symbols?type=all
+https://mantaapi.kiloex.io/index/symbols?types=all
 
-https://opapi.kiloex.io/index/symbols?type=all
+https://opapi.kiloex.io/index/symbols?types=all
 
-https://api.kiloex.io/index/symbols?type=all
+https://api.kiloex.io/index/symbols?types=all
 
 
 ### REST API
