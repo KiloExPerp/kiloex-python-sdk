@@ -43,7 +43,7 @@ def apienv(chain):
 # res.status_code == 20
 @retry_conservative
 def index_symbols(chain=OPBNB):
-    apistr = 'https://' + apienv(chain) +'api.kiloex.io/index/symbols'
+    apistr = 'https://' + apienv(chain) +'api.kiloex.io/index/symbols?types=all'
     res = requests.get(apistr)
     return res.json()
 
