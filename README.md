@@ -35,8 +35,7 @@ perp_kiloex.py
 env-example
 
 [BNBTEST]
-wallet = 0xBdC1248427332eCD8e08B2a3b2a1292CE37daB1b
-private_key = 0xab57804aaacd2ba0a24a6657fcafb27bc126f3b5ba262b82218ad14722f6621e
+wallet = 7cRnmWXhaM3NbrcMP3EJ8DArioZpSraQxgPUFbRtZv7E
 
 ```
 
