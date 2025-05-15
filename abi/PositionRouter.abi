@@ -1087,6 +1087,25 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "decreasePositionQuoteFees",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
@@ -1632,40 +1651,31 @@
     },
     {
       "inputs": [],
-      "name": "getRequestQueueLengths",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "gov",
       "outputs": [
         {
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "increasePositionQuoteFees",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -1800,6 +1810,24 @@
         }
       ],
       "name": "initOrderBook",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_delegateCollectionAddr",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_trustedForwarderAddr",
+          "type": "address"
+        }
+      ],
+      "name": "initTrustedForwarder",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1979,19 +2007,6 @@
     {
       "inputs": [
         {
-          "internalType": "bool",
-          "name": "_allowUserCloseOnly",
-          "type": "bool"
-        }
-      ],
-      "name": "setAllowUserCloseOnly",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "_manager",
           "type": "address"
@@ -2091,19 +2106,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_oracle",
-          "type": "address"
-        }
-      ],
-      "name": "setOracle",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "pendingOwner",
           "type": "address"
         }
@@ -2147,17 +2149,68 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "_settlementProductAddr",
+          "type": "address"
+        }
+      ],
+      "name": "setSettlementProductAddr",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
-          "name": "_increasePositionRequestKeysStart",
+          "name": "_productId",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_decreasePositionRequestKeysStart",
+          "name": "_margin",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "_isLong",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_acceptablePrice",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_executionFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "settlePosition",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "quoteGasFee",
           "type": "uint256"
         }
       ],
-      "name": "setRequestKeysStartValues",
+      "name": "transferQuoteGasFee",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
